@@ -44,7 +44,7 @@ defmodule Red do
     errores_nodos ++ validar_aristas(aristas, ids, MapSet.new(), [])
   end
 
-  # Revisa los nodos: formato inválido e IDs duplicados. Retorna {ids, errores}.
+
   defp validar_nodos([], ids, errores), do: {ids, :lists.reverse(errores)}
 
   defp validar_nodos([{numero, {:error, motivo}} | resto], ids, errores) do
@@ -59,7 +59,7 @@ defmodule Red do
     end
   end
 
-  # Revisa las aristas: formato, nodos desconocidos, bucles y repetidas (o invertidas).
+ 
   defp validar_aristas([], _ids, _vistas, errores), do: :lists.reverse(errores)
 
   defp validar_aristas([{numero, {:error, motivo}} | resto], ids, vistas, errores) do
