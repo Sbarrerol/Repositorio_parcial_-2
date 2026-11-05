@@ -41,7 +41,6 @@ defmodule Coloracion do
     end
   end
 
-  # Sin argumentos usa datos/ y salida/; con dos argumentos: carpeta_datos carpeta_salida
   defp carpetas do
     case System.argv() do
       [datos, salida] -> {datos, salida}
@@ -66,9 +65,6 @@ defmodule Coloracion do
   # Backtracking como Stream
   # -----------------------------------
 
-  # Stream perezoso de todas las coloraciones válidas con k colores. Los nodos
-  # se procesan en el orden del archivo y los colores de 1 a k; nada se calcula
-  # hasta que alguien consume el Stream.
   defp coloraciones(red, k), do: asignar(red.ids, red.vecinos, k, %{})
 
   defp asignar([], _vecinos, _k, asignacion), do: [asignacion]
@@ -83,7 +79,6 @@ defmodule Coloracion do
     end)
   end
 
-  # Un color está libre si ningún vecino ya coloreado lo usa.
   defp libre?(id, color, vecinos, asignacion) do
     vecinos
     |> Map.fetch!(id)
@@ -133,7 +128,6 @@ defmodule Coloracion do
     end)
   end
 
-  # "k;id=color;id=color" -> {:ok, k, [{id, color}, ...]} o {:error, motivo}
   defp parse_propuesta(texto) do
     [k | pares] = Archivo.separar(texto, ";")
 
@@ -184,7 +178,6 @@ defmodule Coloracion do
     end
   end
 
-  # Retorna {asignacion, errores}: nodos desconocidos, repetidos y colores fuera de 1..k.
   defp revisar_pares([], _k, _nodos, asignacion, errores), do: {asignacion, errores}
 
   defp revisar_pares([{id, color} | resto], k, nodos, asignacion, errores) do
@@ -231,7 +224,6 @@ defmodule Coloracion do
   # Solo la primera solución con 10 colores
   # -----------------------------------
 
-  # Enum.take(1) detiene el Stream en cuanto llega la primera solución.
   defp primera_coloracion(red, ruta_svg) do
     case red |> coloraciones(10) |> Enum.take(1) do
       [primera] ->
@@ -243,7 +235,6 @@ defmodule Coloracion do
     end
   end
 
-  # El SVG se escribe por fragmentos: apertura, aristas, nodos y cierre.
   defp dibujar(arch, red, asignacion) do
     nodos = Map.values(red.nodos)
     ancho = Enum.max([0 | Enum.map(nodos, & &1.x)]) + 100
@@ -300,9 +291,6 @@ defmodule Coloracion do
   # Stream infinito: número mínimo de colores
   # -----------------------------------
 
-  # Stream.map es perezoso: {k, total} se calcula solo cuando reduce_while pide
-  # el siguiente elemento, y reduce_while se detiene tras el primer total > 0,
-  # de modo que el k siguiente nunca se calcula.
   defp secuencia_colores(red, ruta) do
     minimo =
       Archivo.escribir(ruta, fn arch ->
