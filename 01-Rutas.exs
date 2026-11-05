@@ -22,7 +22,6 @@ defmodule Rutas do
     end
   end
 
-  # Sin argumentos usa datos/ y salida/; con dos argumentos: carpeta_datos carpeta_salida
   defp carpetas do
     case System.argv() do
       [datos, salida] -> {datos, salida}
@@ -54,8 +53,6 @@ defmodule Rutas do
   # Lectura perezosa de tramos
   # -----------------------------------
 
-  # Cada línea se convierte con Tramo.parse/1; los errores se escriben apenas
-  # aparecen y solo al final de la cadena perezosa se arma la lista de tramos.
   defp leer_tramos(ruta, ruta_errores) do
     Archivo.escribir(ruta_errores, fn arch_errores ->
       ruta
@@ -182,7 +179,6 @@ defmodule Rutas do
     end)
   end
 
-  # Escribe cada estado al recibirlo y retorna el último (el estable).
   defp escribir_alcance(estados, arch, origen, destino) do
     IO.puts(arch, "=== #{origen} → #{destino} ===")
 
@@ -204,7 +200,6 @@ defmodule Rutas do
 
   defp buscar(grafo, origen, destino), do: recorrer(grafo, origen, destino, [origen], 0, 0)
 
-  # Llegó al destino: el camino se acumuló al revés.
   defp recorrer(_grafo, destino, destino, camino, minutos, costo) do
     [%Itinerario{centros: :lists.reverse(camino), minutos: minutos, costo: costo}]
   end
@@ -243,7 +238,6 @@ defmodule Rutas do
     IO.puts(arch, "Menor costo: #{optimos(numerados, & &1.costo)}\n")
   end
 
-  # Números de los itinerarios que empatan en el mínimo del criterio.
   defp optimos(numerados, criterio) do
     minimo =
       numerados
