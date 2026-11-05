@@ -10,8 +10,7 @@ defmodule Archivo do
   @doc """
   Retorna un Stream de `{numero_de_linea, texto}`.
 
-  Ignora las líneas en blanco y las que empiezan con `#`, pero conserva
-  el número de línea física original para los reportes de errores.
+ 
   """
   def lineas(ruta) do
     ruta
