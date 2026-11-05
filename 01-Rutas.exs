@@ -49,9 +49,9 @@ defmodule Rutas do
     end)
   end
 
-  # -----------------------------------
+
   # Lectura perezosa de tramos
-  # -----------------------------------
+  
 
   defp leer_tramos(ruta, ruta_errores) do
     Archivo.escribir(ruta_errores, fn arch_errores ->
@@ -74,10 +74,9 @@ defmodule Rutas do
   defp tramo_valido({numero, _texto, {:ok, tramo}}), do: [%{tramo | linea: numero}]
   defp tramo_valido(_linea), do: []
 
-  # -----------------------------------
+  
   # Validación previa recursiva: depurar la red (sin Enum ni Stream)
-  # -----------------------------------
-
+  
   # Descarta bucles y repeticiones de la misma pareja dirigida (se conserva la
   # primera). Retorna {validos, descartes}; cada descarte es {tramo, motivo}.
   defp depurar(tramos), do: depurar(tramos, MapSet.new(), [], [])
@@ -111,9 +110,9 @@ defmodule Rutas do
     end)
   end
 
-  # -----------------------------------
+  
   # Consultas
-  # -----------------------------------
+  
 
   defp consultar({numero, texto}, grafo, centros, arch_itinerarios, arch_alcance) do
     case Archivo.separar(texto, ",") do
@@ -156,9 +155,9 @@ defmodule Rutas do
     end
   end
 
-  # -----------------------------------
+
   # Stream infinito: centros alcanzables
-  # -----------------------------------
+
 
   # Stream.iterate/2 genera pasos sin fin; Stream.transform/3 lo corta (:halt)
   # al ver el primer estado igual al anterior y solo emite los estados distintos.
@@ -194,9 +193,9 @@ defmodule Rutas do
     ultimo
   end
 
-  # -----------------------------------
+
   # Búsqueda recursiva de itinerarios simples
-  # -----------------------------------
+
 
   defp buscar(grafo, origen, destino), do: recorrer(grafo, origen, destino, [origen], 0, 0)
 
@@ -221,9 +220,9 @@ defmodule Rutas do
     end)
   end
 
-  # -----------------------------------
+
   # Salida de itinerarios y óptimos
-  # -----------------------------------
+
 
   defp escribir_itinerarios(arch, itinerarios) do
     numerados = Enum.with_index(itinerarios, 1)

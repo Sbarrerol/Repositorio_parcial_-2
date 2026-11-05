@@ -9,9 +9,9 @@ defmodule Red do
 
   defstruct ids: [], nodos: %{}, aristas: [], vecinos: %{}
 
-  # -----------------------------------
+
   # Lectura
-  # -----------------------------------
+ 
 
   def leer_nodos(ruta) do
     ruta
@@ -34,9 +34,9 @@ defmodule Red do
     end
   end
 
-  # -----------------------------------
+
   # Validación previa recursiva
-  # -----------------------------------
+
 
   @doc "Retorna la lista de problemas de la red (vacía si es válida)."
   def validar(nodos, aristas) do
@@ -95,9 +95,9 @@ defmodule Red do
     end
   end
 
-  # -----------------------------------
+
   # Construcción (solo con red válida)
-  # -----------------------------------
+
 
   @doc "Construye la red a partir de nodos y aristas ya validados."
   def construir(nodos, aristas) do

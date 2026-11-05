@@ -61,9 +61,9 @@ defmodule Coloracion do
     secuencia_colores(red, Path.join(salida, "secuencia_colores.csv"))
   end
 
-  # -----------------------------------
+
   # Backtracking como Stream
-  # -----------------------------------
+
 
   defp coloraciones(red, k), do: asignar(red.ids, red.vecinos, k, %{})
 
@@ -85,9 +85,8 @@ defmodule Coloracion do
     |> Enum.all?(fn vecino -> Map.get(asignacion, vecino) != color end)
   end
 
-  # -----------------------------------
+
   # Un archivo por k: cada solución se escribe al recibirla
-  # -----------------------------------
 
   defp coloraciones_de_k({numero, texto}, red, salida) do
     case Archivo.entero(texto, 1) do
@@ -115,9 +114,9 @@ defmodule Coloracion do
     Util2.mostrar("k = #{k}: #{total} coloraciones", :mensaje)
   end
 
-  # -----------------------------------
+
   # Verificación recursiva de propuestas (sin Enum ni Stream)
-  # -----------------------------------
+
 
   defp verificar_propuestas(ruta, red, ruta_salida) do
     Archivo.escribir(ruta_salida, fn arch ->
@@ -220,9 +219,9 @@ defmodule Coloracion do
     end
   end
 
-  # -----------------------------------
+
   # Solo la primera solución con 10 colores
-  # -----------------------------------
+
 
   defp primera_coloracion(red, ruta_svg) do
     case red |> coloraciones(10) |> Enum.take(1) do
@@ -287,9 +286,9 @@ defmodule Coloracion do
     |> String.replace("'", "&apos;")
   end
 
-  # -----------------------------------
+
   # Stream infinito: número mínimo de colores
-  # -----------------------------------
+
 
   defp secuencia_colores(red, ruta) do
     minimo =
